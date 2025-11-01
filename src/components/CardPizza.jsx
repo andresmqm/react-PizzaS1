@@ -23,4 +23,4 @@ function CardPizza(props) {
   );
 }
 
-export default CardPizza;
+export default CardPizza; 
