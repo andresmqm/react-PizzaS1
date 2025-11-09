@@ -7,20 +7,31 @@ import Home from './components/Home';
 import Footer from './components/Footer';
 import Register from './components/register';
 import Login from './Login';
+import Cart from './components/Cart';
 
 
 function App() {
 
-  
+
   return (
     <>
     <NavPizza>
     </NavPizza>
 
+
 {/*
+
+//SI DESEA VER EL HOME DESCOMENTALO (CORRESPONDE AL HITO N°3)
 
 <Home></Home>
 
+*/}
+
+<Cart></Cart>
+
+
+
+{/*
 <Header></Header>
 
 <div className='cards'>
@@ -51,7 +62,7 @@ function App() {
 
 </div>
 
-*/}
+
 
 <Register></Register>
 
