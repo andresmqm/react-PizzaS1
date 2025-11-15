@@ -1,42 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import "./Home.css";
 
-export default function Home() {
+export default function Pizza() {
 
-  const apiUrl = "http://localhost:5000/api/pizzas"
+  const apiUrl = "http://localhost:5000/api/pizzas/p001"
 
-  const [pizza, setPizza] = useState([])
+  const [napo, setNapo] = useState([])
 
-  const getPizza = async() =>{
+  const getNapo = async() =>{
     const res = await fetch(apiUrl)
     const pizzas = await res.json()
-    setPizza(pizzas)
+    setNapo([pizzas])
   }
 
   useEffect(()=>{
-    getPizza()
+    getNapo()
   }, [])
 
 
   return (
 
-    <div className='container'>
+    <div>
 
-      {pizza.map((p, i)=>{
+      {napo.map((n, i)=>{
+        
         return(
 
           <Card key={i} style={{ width: '25rem' }}>
-      <Card.Img variant="top" src={p.img} />
+      <Card.Img variant="top" src={n.img} />
       <Card.Body>
-        <Card.Title>{p.name}</Card.Title>
+        <Card.Title>{n.name}</Card.Title>
         <hr/>
-        <Card.Text className='ingre'><p><i class="fa-solid fa-pizza-slice"></i>{p.desc}</p></Card.Text>
+        <Card.Text className='ingre'><p><i class="fa-solid fa-pizza-slice"></i>{n.desc}</p></Card.Text>
         <hr/>
-        <Card.Text className='ingre'>Ingredientes <p><i class="fa-solid fa-pizza-slice"></i>{p.ingredients}</p></Card.Text>
+        <Card.Text className='ingre'>Ingredientes <p><i class="fa-solid fa-pizza-slice"></i>{n.ingredients}</p></Card.Text>
         <hr/>
-        <Card.Title className='price'>${p.price.toLocaleString('es-CL')}</Card.Title>
+        <Card.Title className='price'>${n.price.toLocaleString('es-CL')}</Card.Title>
         
         <div className='botones'>
        <Button variant="light">Ver mas <i class="fa-solid fa-eye"></i></Button> 
@@ -52,5 +52,3 @@ export default function Home() {
 
   )
 }
-
-

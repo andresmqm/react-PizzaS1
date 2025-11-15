@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Register from './components/register';
 import Login from './Login';
 import Cart from './components/Cart';
+import Pizza from './components/Pizza';
 
 
 function App() {
@@ -18,16 +19,24 @@ function App() {
     <NavPizza>
     </NavPizza>
 
-
 {/*
 
-//SI DESEA VER EL HOME DESCOMENTALO (CORRESPONDE AL HITO N°3)
+//SI DESEA VER EL HOME DESCOMENTALO (CORRESPONDE AL HITO N°4)
 
 <Home></Home>
 
 */}
 
+{/*
+
+//SI DESEA VER EL HOME DESCOMENTALO (CORRESPONDE AL HITO N°3)
+
+
 <Cart></Cart>
+
+
+*/}
+
 
 
 
@@ -73,6 +82,8 @@ SI QUIERES ACCEDER AL LOGIN DESCOMENTA... :)
 <Login></Login>
 
 */}
+
+<Pizza></Pizza>
 
    <Footer></Footer>
 

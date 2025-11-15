@@ -1,3 +1,8 @@
+/*
+
+CSS de CardPizza2
+
+
 .cards{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
@@ -21,4 +26,14 @@
 
 .price{
   text-align: center !important;
+} 
+
+
+*/
+
+
+.container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
 }
