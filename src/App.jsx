@@ -1,14 +1,19 @@
 
 import './App.css'
-import CardPizza from './components/CardPizza'
+
 import NavPizza from './components/Navbar'
-import Header from './components/Header';
-import Home from './components/Home';
 import Footer from './components/Footer';
-import Register from './components/register';
-import Login from './Login';
-import Cart from './components/Cart';
-import Pizza from './components/Pizza';
+
+import NotFound from './Pages/NotFoundPages';
+import HomePages from './Pages/HomePages';
+import RegisterPages from './Pages/RegisterPages';
+import LoginPages from './Pages/LoginPages';
+import CartPages from './Pages/CartPages';
+import PizzaPages from './Pages/PizzaPages';
+import ProfilePages from './Pages/ProfilePages';
+
+
+import { Route, Routes } from 'react-router-dom';
 
 
 function App() {
@@ -16,10 +21,11 @@ function App() {
 
   return (
     <>
-    <NavPizza>
-    </NavPizza>
+<NavPizza></NavPizza>
+
 
 {/*
+    <Profile></Profile>
 
 //SI DESEA VER EL HOME DESCOMENTALO (CORRESPONDE AL HITO N°4)
 
@@ -81,11 +87,27 @@ SI QUIERES ACCEDER AL LOGIN DESCOMENTA... :)
 
 <Login></Login>
 
-*/}
 
 <Pizza></Pizza>
 
-   <Footer></Footer>
+*/}
+
+<Routes>
+
+<Route path="/" element={<HomePages/>} />
+<Route path='/register' element={<RegisterPages/>}/>
+<Route path='/login' element={<LoginPages/>}/>
+<Route path='/cart' element={<CartPages/>}/>
+<Route path='/pizza/p001' element={<PizzaPages/>}/>
+<Route path='/profile' element={<ProfilePages/>}/>
+<Route path='/404' element={<NotFound/>}/>
+<Route path="*" element={<NotFound />} />
+
+</Routes>
+
+
+<Footer></Footer>
+
 
 
     </>

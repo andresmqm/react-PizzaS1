@@ -7,7 +7,7 @@ function CardPizza2(props) {
 
   return (
     
-    <Card className="pizzaCards">
+    <Card className="pizzaCards" >
       <Card.Img variant="top" src={pizza.img} />
       <Card.Body>
         <Card.Title>{pizza.name}</Card.Title>
