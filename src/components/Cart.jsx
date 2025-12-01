@@ -1,39 +1,21 @@
-import React, { useState } from 'react'
-import { pizzaCart } from '../../Material de apoyo - Pizzas/pizzas';
+import React, { useContext } from 'react';
+import { CartContext } from '../contexts/CartContext';
 
 export default function Cart() {
 
-    const [cart, setCart] = useState(pizzaCart.map((pizzas) => ({
-      ...pizzas, cantidad: pizzas.cantidad || 1, price: Number(pizzas.price), 
+  const { cart, addToCart, removeFromCart, getTotal } = useContext(CartContext);
 
-    })));
-
-  
-
-  const aumentarcant = (id) => {
-    const carroNew = cart.map((pizzas) =>
-      pizzas.id === id ? { ...pizzas, cantidad: pizzas.cantidad + 1 } : pizzas
-    );
-    setCart(carroNew);
+  const aumentarcant = (pizza) => {
+    addToCart(pizza);
   };
 
-  
-
   const restarCant = (id) => {
-    const carroNew = cart.map((pizzas) =>
-        pizzas.id === id ? { ...pizzas, cantidad: Math.max(pizzas.cantidad - 1, 0) } : pizzas)
-      .filter((pizzas) => pizzas.cantidad > 0);
-    setCart(carroNew);};
+    removeFromCart(id);
+  };
 
-  
-  const total = cart.reduce(
-
-    (acumulador, pizzas) => acumulador + pizzas.price * pizzas.cantidad, 0);
-
-
+  const total = getTotal();
 
   return (
-    
     <div className="container mt-4">
       <h2>Detalles del pedido:</h2>
 
@@ -45,49 +27,42 @@ export default function Cart() {
             key={pizzas.id}
             className="d-flex align-items-center justify-content-between border-bottom py-2">
 
-
             <div className="d-flex align-items-center">
               <img
                 src={pizzas.img}
                 alt={pizzas.name}
                 width="120"
                 height="80"
-                style={{ borderRadius: "10px", objectFit: "cover" }}/>
-
+                style={{ borderRadius: "10px", objectFit: "cover" }}
+              />
 
               <div className="ms-3">
                 <h5 className="mb-1">{pizzas.name}</h5>
                 <p className="mb-0">${pizzas.price.toLocaleString("es-CL")}</p>
               </div>
-
             </div>
 
-
             <div className="d-flex align-items-center">
-
               <button
                 className="btn btn-outline-secondary mx-2"
-                onClick={() => restarCant(pizzas.id)}>  -  </button>
-
+                onClick={() => restarCant(pizzas.id)}> - </button>
 
               <span>{pizzas.cantidad}</span>
 
-
               <button
                 className="btn btn-outline-secondary mx-2"
-                onClick={() => aumentarcant(pizzas.id)}>  +   </button>
-
+                onClick={() => aumentarcant(pizzas)}> + </button>
             </div>
 
           </div>
-        )))}
+        ))
+      )}
 
       <hr />
 
       <h3>Total: ${total.toLocaleString("es-CL")}</h3>
 
       <button className="btn btn-dark mt-2">Pagar</button>
-
     </div>
   );
 }

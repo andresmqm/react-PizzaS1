@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import "./Home.css";
+import { CartContext } from '../contexts/CartContext';
 
 export default function Home() {
 
   const apiUrl = "http://localhost:5000/api/pizzas"
 
-  const [pizza, setPizza] = useState([])
+  const [pizza, setPizza] = useState([]);
+
+  const{addToCart} = useContext(CartContext);
 
   const getPizza = async() =>{
     const res = await fetch(apiUrl)
@@ -24,23 +27,23 @@ export default function Home() {
 
     <div className='container'>
 
-      {pizza.map((p, i)=>{
+      {pizza.map((p)=>{
         return(
 
-          <Card key={i} style={{ width: '25rem' }}>
+          <Card key={p.id} style={{ width: '25rem' }}>
       <Card.Img variant="top" src={p.img} />
       <Card.Body>
         <Card.Title>{p.name}</Card.Title>
         <hr/>
-        <Card.Text className='ingre'><p><i class="fa-solid fa-pizza-slice"></i>{p.desc}</p></Card.Text>
+        <Card.Text className='ingre'><p><i className="fa-solid fa-pizza-slice"></i>{p.desc}</p></Card.Text>
         <hr/>
-        <Card.Text className='ingre'>Ingredientes <p><i class="fa-solid fa-pizza-slice"></i>{p.ingredients}</p></Card.Text>
+        <Card.Text className='ingre'>Ingredientes <p><i className="fa-solid fa-pizza-slice"></i>{p.ingredients.join(",")}</p></Card.Text>
         <hr/>
         <Card.Title className='price'>${p.price.toLocaleString('es-CL')}</Card.Title>
         
         <div className='botones'>
-       <Button variant="light">Ver mas <i class="fa-solid fa-eye"></i></Button> 
-       <Button variant="dark">Añadir mas <i class="fa-solid fa-cart-shopping"></i></Button>
+       <Button variant="light">Ver mas <i className="fa-solid fa-eye"></i></Button> 
+       <Button variant="dark" onClick={() => addToCart(p)} >Añadir mas <i className="fa-solid fa-cart-shopping"></i></Button>
        </div>
       </Card.Body>
     </Card>
