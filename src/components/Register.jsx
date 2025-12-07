@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import "./Register.css"
+import Swal from 'sweetalert2';
 
 export default function Register() {
 

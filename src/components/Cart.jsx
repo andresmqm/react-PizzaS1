@@ -1,9 +1,13 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../contexts/CartContext';
+import { LogoutContext } from '../contexts/LogoutContext';
 
 export default function Cart() {
 
   const { cart, addToCart, removeFromCart, getTotal } = useContext(CartContext);
+
+  const {token} = useContext(LogoutContext);
+
 
   const aumentarcant = (pizza) => {
     addToCart(pizza);
@@ -62,7 +66,11 @@ export default function Cart() {
 
       <h3>Total: ${total.toLocaleString("es-CL")}</h3>
 
-      <button className="btn btn-dark mt-2">Pagar</button>
+
+
+      {/* El boton de pagar se deshabilita si no hay token */}
+      
+      <button className="btn btn-dark mt-2" disabled={!token}>Pagar</button>
     </div>
   );
 }

@@ -13,10 +13,19 @@ import PizzaPages from './Pages/PizzaPages';
 import ProfilePages from './Pages/ProfilePages';
 
 
-import { Route, Routes } from 'react-router-dom';
+
+import {Navigate, Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import Pizza from './components/Pizza';
+import{ useContext } from 'react';
+import { LogoutContext } from './contexts/LogoutContext';
+
+
 
 
 function App() {
+
+    const {token} = useContext(LogoutContext);
 
 
   return (
@@ -95,13 +104,20 @@ SI QUIERES ACCEDER AL LOGIN DESCOMENTA... :)
 <Routes>
 
 <Route path="/" element={<HomePages/>} />
-<Route path='/register' element={<RegisterPages/>}/>
-<Route path='/login' element={<LoginPages/>}/>
+<Route path='/register' element={token ? <Navigate to="/" /> : <RegisterPages />}/>
+<Route path='/login' element={token ? <Navigate to="/" /> : <LoginPages />}/>
 <Route path='/cart' element={<CartPages/>}/>
+
+{/* redirige a una pizza en específico en unos de los desafios anteriores
+
 <Route path='/pizza/p001' element={<PizzaPages/>}/>
-<Route path='/profile' element={<ProfilePages/>}/>
+*/}
+
+<Route path='/profile' element={token ? <ProfilePages /> : <Navigate to="/login" />}/>
 <Route path='/404' element={<NotFound/>}/>
 <Route path="*" element={<NotFound />} />
+<Route path="/pizza/:id" element={<Pizza />} />
+
 
 </Routes>
 

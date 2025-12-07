@@ -17,6 +17,8 @@ function CardPizza(props) {
         <div className='botones'>
        <Button variant="light">Ver mas <i class="fa-solid fa-eye"></i></Button> 
        <Button variant="dark">Añadir mas <i class="fa-solid fa-cart-shopping"></i></Button>
+       
+      
        </div>
       </Card.Body>
     </Card>
