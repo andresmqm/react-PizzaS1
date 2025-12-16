@@ -4,14 +4,22 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';
-import { LogoutContext } from '../contexts/LogoutContext';
+ import { LogoutContext } from '../contexts/LogoutContext';
+import { UserContext } from '../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 function NavPizza() {
 
     const { getTotal } = useContext(CartContext);
     
-    const { token, logout } = useContext(LogoutContext);
+    const { token, logout } = useContext(UserContext);
 
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
 
   return (
@@ -37,8 +45,8 @@ function NavPizza() {
 
           {token && (
             <>
-            <Nav.Link onClick={logout}><i className="fa-solid fa-lock"></i> Logout</Nav.Link>
-            <Nav.Link as={Link} to="/profile"><i className="fa-solid fa-circle-user"></i>{token ? "Profile" : "Register"}</Nav.Link>
+            <Nav.Link onClick={handleLogout}><i className="fa-solid fa-lock"></i> Logout</Nav.Link>
+            <Nav.Link as={Link} to="/profile"><i className="fa-solid fa-circle-user"></i>Profile</Nav.Link>
             </>
           )}
 

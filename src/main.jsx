@@ -5,16 +5,19 @@ import App from './App.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom'
 import {CartProvider} from './contexts/CartContext.jsx';
-import { LogoutProvider } from './contexts/LogoutContext.jsx';
+// import { LogoutProvider } from './contexts/LogoutContext.jsx';
+import { UserProvider } from './contexts/UserContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-<LogoutProvider>
+{/*  <LogoutProvider> */}
+<UserProvider>
  <CartProvider>
     <BrowserRouter>
         <App />
    </BrowserRouter>
  </CartProvider>
- </LogoutProvider>
+</UserProvider>
+ {/* </LogoutProvider> */}
   </StrictMode>,
 )

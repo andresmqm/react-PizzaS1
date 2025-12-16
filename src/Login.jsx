@@ -1,87 +1,53 @@
-import React, {useState} from 'react'
-import "./Login.css"
+import { useContext, useState } from "react";
+import { UserContext } from "./contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
 
-    const [Email, setEmail] = useState()
-    const [Password, setPassword] = useState()
+export default function LoginPages() {
 
-    const PasswordValid = "123456"
+  const { login } = useContext(UserContext);
+  const navigate = useNavigate();
 
-    const onclickHandler = (event) =>{
-        event.preventDefault()
-        
-        console.log({
-            Email,
-            Password,
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  })
-
-  if(!Email|| !Password){
-            alert("todos los campos son obligatorio")
-        
-        }else if(Password.length <6){
-            alert("El password debe tener al menos 6 caracteres")
-        
-        }else if(Password === PasswordValid){
-            alert("Exito! tus datos son correctos")
-
-        }else{
-            alert("Error, los datos son invalidos")
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      alert("Todos los campos son obligatorios");
+      return;
     }
 
-
-     function onEmail(event){
-        setEmail(event.target.value)
+    try {
+      await login(email, password);
+      navigate("/");
+    } catch (error) {
+      alert("Credenciales incorrectas");
     }
-
-    function onPassword(event){
-        setPassword(event.target.value)
-    }
-
-
-
+  };
 
   return (
-    <>
+    <div className="container mt-4">
+      <h2>Login</h2>
 
-    <h1>Login</h1>
-
-    <form onSubmit={onclickHandler}>
-
-        <div>
-
-            <p>Email
-            <br />
+      <form onSubmit={handleSubmit}>
         <input
-            type="text" 
-            placeholder='Enter your email' 
-            value={Email}
-            onChange={onEmail}
-            />
-        </p>
+          className="form-control mb-2"
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-            <p>Password
-                <br />
-             <input 
-             type="text"
-              placeholder='Enter your passaword'
-              value={Password} 
-              onChange={onPassword}
-              />
-            </p>
+        <input
+          className="form-control mb-2"
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-            <button className='bg-primary p-2 text-white' type='submit' >Login</button>
-
-
-
-        </div>
-
-    
-    </form>
-  
-    
-    </>
-    )
- }
+        <button className="btn btn-dark w-100">Ingresar</button>
+      </form>
+    </div>
+  );
+}

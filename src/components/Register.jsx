@@ -1,107 +1,73 @@
-import React, {useState} from 'react';
-import "./Register.css"
-import Swal from 'sweetalert2';
+import { useContext, useState } from "react";
+import { UserContext } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-
-    const [Email, setEmail] = useState()
-    const [Password, setPassword] = useState()
-    const [ConfirPassword, setConfirPassword] = useState()
-
-    const passwordValid = "123456"
-    const ConfirPasswordvalid = "123456"
-
     
-    const onclickHandler = (event) =>{
-        event.preventDefault()
-        
-        console.log({
-            Email,
-            Password,
-            ConfirPassword
-        })
+  const { register } = useContext(UserContext);
+   const navigate = useNavigate();
 
-        if(!Email|| !Password || !ConfirPassword){
-            alert("todos los campos son obligatorio")
-        
-        }else if(Password.length <6){
-            alert("El password debe tener al menos 6 caracteres")
-        }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-        else if(Password !== ConfirPassword){
-            alert("Contraseñas no coinciden")
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        }
-
-        else if(Password === passwordValid && ConfirPassword === ConfirPasswordvalid){
-            alert("Exito! tus datos son correctos")
-
-        }else{
-            alert("Error, los datos son invalidos")
-        }
-        
-
-    }
-    
-    function onEmail(event){
-        setEmail(event.target.value)
+    if (!email || !password || !confirmPassword) {
+      alert("Todos los campos son obligatorios");
+      return;
     }
 
-    function onPassword(event){
-        setPassword(event.target.value)
+    if (password.length < 6) {
+      alert("El password debe tener al menos 6 caracteres");
+      return;
     }
 
-    function onConfirPassword(event){
-        setConfirPassword(event.target.value)
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
     }
 
+
+    try {
+      await register(email, password);
+      navigate("/");
+    } catch {
+      alert("Error al registrar usuario");
+    }
+  };
+
+
+  
   return (
-    <>
-        <h1>Login</h1>
+    <div className="container mt-4">
+      <h2>Registro</h2>
 
-        <form onSubmit={onclickHandler}>
-
-    <div className='container'>
-
-        <p>Email
-            <br />
+      <form onSubmit={handleSubmit}>
         <input
-            type="text" 
-            placeholder='Enter your email' 
-            value={Email}
-            onChange={onEmail}
-            />
-        </p>
+          className="form-control mb-2"
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-            <p>Password
-                <br />
-             <input 
-             type="text"
-              placeholder='Enter your passaword'
-              value={Password} 
-              onChange={onPassword}
-              />
-            </p>
+        <input
+          className="form-control mb-2"
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-               <p>Confirm Password
-                <br />
-              <input 
-             type="text"
-              placeholder='Confirm Password'
-              value={ConfirPassword} 
-              onChange={onConfirPassword}
-              />
-               </p>   
+        <input
+          className="form-control mb-2"
+          type="password"
+          placeholder="Confirmar Password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
 
-
-    <button className='bg-primary p-2 text-white' type='submit' >Login</button>
-
+        <button className="btn btn-dark w-100">Registrarse</button>
+      </form>
     </div>
-
-        </form>
-
-    
-    
-    </>
-  )
+  );
 }

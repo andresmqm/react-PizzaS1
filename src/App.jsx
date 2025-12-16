@@ -19,13 +19,13 @@ import Home from './components/Home';
 import Pizza from './components/Pizza';
 import{ useContext } from 'react';
 import { LogoutContext } from './contexts/LogoutContext';
-
+import { UserContext } from './contexts/UserContext';
 
 
 
 function App() {
 
-    const {token} = useContext(LogoutContext);
+    const {token} = useContext(UserContext);
 
 
   return (

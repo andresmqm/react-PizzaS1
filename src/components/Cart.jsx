@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CartContext } from '../contexts/CartContext';
 import { LogoutContext } from '../contexts/LogoutContext';
+import { UserContext } from '../contexts/UserContext';
 
 export default function Cart() {
 
   const { cart, addToCart, removeFromCart, getTotal } = useContext(CartContext);
 
-  const {token} = useContext(LogoutContext);
+ const { token } = useContext(UserContext);
+ const [success, setSuccess] = useState(false);
 
+  
 
   const aumentarcant = (pizza) => {
     addToCart(pizza);
@@ -18,6 +21,27 @@ export default function Cart() {
   };
 
   const total = getTotal();
+
+  const checkout = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/checkouts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ cart }),
+      });
+
+      if (!res.ok) throw new Error();
+
+       setSuccess(true);
+       
+    } catch {
+      alert("Error al procesar la compra");
+    }
+  };
+
 
   return (
     <div className="container mt-4">
@@ -66,11 +90,17 @@ export default function Cart() {
 
       <h3>Total: ${total.toLocaleString("es-CL")}</h3>
 
+      {success && (
+        <div className="alert alert-success mt-3">Compra realizada con éxito</div>
+      )}
+
 
 
       {/* El boton de pagar se deshabilita si no hay token */}
       
-      <button className="btn btn-dark mt-2" disabled={!token}>Pagar</button>
+      <button className="btn btn-dark mt-2" 
+      disabled={!token}
+      onClick={checkout} >Pagar</button>
     </div>
   );
 }
